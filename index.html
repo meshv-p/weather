@@ -1,91 +1,34 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html lang="en">
 
-<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather app</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+</head>
 
-  <head> 
+<body>
+    <div class="container">
+        <img src="" alt="" srcset="" id="weather-icon">
+        <div id="location">Unable to Fetch Weather</div>
+        <div class="desc">No Information Available.</div>
+        <div class="weather">
+            <div class="c">Error</div>
+            <div class="circle"></div>
+            <div class="f">Error</div>
+        </div>
+        <div class="info">
+            <h4>Sunrise: <span class="sunrise">No Information Available</span></h4>
+            <h4>Sunset: <span class="sunset">No Information Available</span></h4>
+        </div>
 
-    <meta charset="UTF-8" /> 
+    </div>
+    <script src="scripts.js"></script>
+</body>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-
-    <!--The CSS styling-->
-
-    <style> 
-
-      * { 
-
-        margin: 0; 
-
-        padding: 0; 
-
-        box-sizing: border-box; 
-
-      } 
-
-      body { 
-
-        height: 100vh; 
-
-        display: flex; 
-
-        flex-direction: column; 
-
-        align-items: center; 
-
-        justify-content: center; 
-
-        background: linear-gradient(rgb(123, 184, 104), rgb(13, 87, 10)); 
-
-        font-size: 2rem; 
-
-        font-family: sans-serif; 
-
-        color: rgb(7, 9, 10); 
-
-      } 
-
-      .container { 
-
-        height: 20rem; 
-
-        width: 15rem; 
-
-        background-color: rgb(152, 228, 165); 
-
-        text-align: center; 
-
-        padding-top: 12px; 
-
-        border-radius: 16px; 
-
-        border: 2px solid rgb(14, 43, 1); 
-
-      } 
-
-    </style> 
-
-  </head> 
-
-  <body> 
-
-    <div class="container"> 
-
-      <div class="icon">---</div> 
-
-      <div class="temp">-°C</div> 
-
-      <div class="summary">----</div> 
-
-      <div class="location"></div> 
-
-    </div> 
-
-    <!--Linking the javscript code-->
-
-    <script src="script.js"></script> 
-
-  </body> 
-
-</html> 
+</html>
