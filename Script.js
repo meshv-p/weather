@@ -1,77 +1,52 @@
-// Declaring the variables 
-let lon; 
-let lat; 
+// Openweathermap API. Do not share it publicly.
+const api = '7dbd3cfed90ae79278d20ce39d514f32'; //Replace with your API
 
-let temperature = document.querySelector(".temp"); 
+const iconImg = document.getElementById('weather-icon');
+const loc = document.querySelector('#location');
+const tempC = document.querySelector('.c');
+const tempF = document.querySelector('.f');
+const desc = document.querySelector('.desc');
+const sunriseDOM = document.querySelector('.sunrise');
+const sunsetDOM = document.querySelector('.sunset');
 
-let summary = document.querySelector(".summary"); 
+window.addEventListener('load', () => {
+  let long;
+  let lat;
+  // Accesing Geolocation of User
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      // Storing Longitude and Latitude in variables
+      long = position.coords.longitude;
+      lat = position.coords.latitude;
+      const base = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api}&units=metric`;
 
-let loc = document.querySelector(".location"); 
+      // Using fetch to get data
+      fetch(base)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const { temp, feels_like } = data.main;
+          const place = data.name;
+          const { description, icon } = data.weather[0];
+          const { sunrise, sunset } = data.sys;
 
-let icon = document.querySelector(".icon"); 
-const kelvin = 273; 
+          const iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+          const fahrenheit = (temp * 9) / 5 + 32;
 
-  
+          // Converting Epoch(Unix) time to GMT
+          const sunriseGMT = new Date(sunrise * 1000);
+          const sunsetGMT = new Date(sunset * 1000);
 
-window.addEventListener("load", () => { 
-
-  if (navigator.geolocation) { 
-
-    navigator.geolocation.getCurrentPosition((position) => { 
-
-      console.log(position); 
-
-      lon = position.coords.longitude; 
-
-      lat = position.coords.latitude; 
-
-  
-
-      // API ID 
-
-      const api = "6d055e39ee237af35ca066f35474e9df"; 
-
-  
-
-      // API URL 
-
-      const base = 
-
-`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&` + 
-`lon=${lon}&appid=6d055e39ee237af35ca066f35474e9df`; 
-
-  
-
-      // Calling the API 
-
-      fetch(base) 
-
-        .then((response) => { 
-
-          return response.json(); 
-
-        }) 
-
-        .then((data) => { 
-
-          console.log(data); 
-
-          temperature.textContent =  
-
-              Math.floor(data.main.temp - kelvin) + "°C"; 
-
-          summary.textContent = data.weather[0].description; 
-
-          loc.textContent = data.name + "," + data.sys.country; 
-
-          let icon1 = data.weather[0].icon; 
-
-          icon.innerHTML =  
-
-              `<img src="icons/${icon1}.svg" style= 'height:10rem'/>`; 
-
-        }); 
-
-    }); 
-
-  } 
+          // Interacting with DOM to show data
+          iconImg.src = iconUrl;
+          loc.textContent = `${place}`;
+          desc.textContent = `${description}`;
+          tempC.textContent = `${temp.toFixed(2)} °C`;
+          tempF.textContent = `${fahrenheit.toFixed(2)} °F`;
+          sunriseDOM.textContent = `${sunriseGMT.toLocaleDateString()}, ${sunriseGMT.toLocaleTimeString()}`;
+          sunsetDOM.textContent = `${sunsetGMT.toLocaleDateString()}, ${sunsetGMT.toLocaleTimeString()}`;
+        });
+    });
+  }
+});
